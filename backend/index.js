@@ -1,18 +1,10 @@
-const express = require('express');
-const db = require('./db');
-const app = express();
-const PORT = 3000;
+const request = require('supertest');
+const app = require('../index');
 
-app.get('/', async (req, res) => {
-  try {
-    const result = await db.query('SELECT NOW()');
-    res.send(`Hello from backend! DB time: ${result.rows[0].now}`);
-  } catch (err) {
-    console.error('DB query error:', err);
-    res.status(500).send('Database error');
-  }
-});
-
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
+describe('GET /', () => {
+  it('should respond with DB time', async () => {
+    const res = await request(app).get('/');
+    expect(res.statusCode).toEqual(200);
+    expect(res.text).toMatch(/Hello from backend! DB time:/);
+  });
 });

@@ -22,10 +22,9 @@ jobs:
         working-directory: ./backend
         run: npm install
 
-      - name: Run tests (optional)
+      - name: Run tests
         working-directory: ./backend
-        run: |
-          echo "No tests defined yet"
+        run: npm test
 
       - name: Build Docker image
         run: |
